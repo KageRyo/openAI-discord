@@ -23,7 +23,8 @@ async def on_message(message):
         chat_history.clear()
         # 將文本傳回 Discord 頻道
         channel=client.get_channel(channel_id)
-        await message.channel.send("已清除所有使用者的聊天紀錄")
+        res = "已清除所有使用者的聊天紀錄"
+        await message.channel.send(f"{message.author.mention}, {res}")
         return
     # 如果訊息的格式符合 "AIclear"，則進行處理
     if chat_content == "AIclear":
@@ -31,7 +32,8 @@ async def on_message(message):
         chat_history[user_id] = []
         # 將文本傳回 Discord 頻道
         channel=client.get_channel(channel_id)
-        await message.channel.send("已清除聊天紀錄")
+        res = "已清除聊天紀錄"
+        await message.channel.send(f"{message.author.mention}, {res}")
         return
     # 如果訊息的格式符合 "AI" + 內容 + "，則進行處理
     if chat_content.startswith('AI"'):
@@ -68,9 +70,10 @@ async def on_message(message):
         jsondata = response.json()
         print(response.json())
         response_text = jsondata['choices'][0]['text']
-        # 將回覆的文本傳回 Discord 頻道
+        # 将回复的文本傳回 Discord 频道
         channel=client.get_channel(channel_id)
-        await message.channel.send(response_text)
+        res = response_text
+        await message.channel.send(f"{message.author.mention}, {res}")
     else:
         # 處理錯誤
         print(response.json())
