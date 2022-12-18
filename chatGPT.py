@@ -17,6 +17,14 @@ async def on_message(message):
     # 取得使用者 ID 和聊天內容
     user_id = message.author.id
     chat_content = message.content
+    # 如果訊息的格式符合 "AIclearALL"，則進行處理
+    if chat_content == "AIclearALL":
+        # 清除所有使用者的聊天紀錄
+        chat_history.clear()
+        # 將文本傳回 Discord 頻道
+        channel=client.get_channel(channel_id)
+        await message.channel.send("已清除所有使用者的聊天紀錄")
+        return
     # 如果訊息的格式符合 "AIclear"，則進行處理
     if chat_content == "AIclear":
         # 將使用者的聊天紀錄清除
