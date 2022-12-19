@@ -14,9 +14,11 @@ chat_history = {}
 
 @client.event
 async def on_message(message):
-    # 取得使用者 ID 和聊天內容
+    # 取得使用者 ID 和聊天内容
     user_id = message.author.id
     chat_content = message.content
+    model = "text-davinci-003"
+    res = ""
     # 如果訊息的格式符合 "AIclearALL"，則進行處理
     if chat_content == "AIclearALL":
         # 清除所有使用者的聊天紀錄
@@ -27,20 +29,28 @@ async def on_message(message):
         await message.channel.send(f"{message.author.mention}, {res}")
         return
     # 如果訊息的格式符合 "AIclear"，則進行處理
-    if chat_content == "AIclear":
-        # 將使用者的聊天紀錄清除
+    elif chat_content == "AIclear":
+        # 將使用者的聊天纪录清除
         chat_history[user_id] = []
-        # 將文本傳回 Discord 頻道
+        # 將文本傳回 Discord 频道
         channel=client.get_channel(channel_id)
         res = "已清除聊天紀錄"
         await message.channel.send(f"{message.author.mention}, {res}")
         return
-    # 如果訊息的格式符合 "AI" + 內容 + "，則進行處理
-    if chat_content.startswith('AI"'):
-        # 去除頭尾的雙引號
+    # 如果訊息的格式符合 "AIcode" + 內容，則進行處理
+    elif chat_content.startswith('AIcode"'):
+        # 去除頭尾的双引號
         chat_content = chat_content.strip('"')
         # 將字符串分割成三個部分，取出第二個部分的內容
         chat_content = chat_content.split('"')[1]
+        model = "code-davinci-002"
+    # 如果訊息的格式符合 "AI" + 內容 + "，則進行處理
+    elif chat_content.startswith('AI"'):
+        # 去除頭尾的双引號
+        chat_content = chat_content.strip('"')
+        # 將字符串分割成三個部分，取出第二個部分的內容
+        chat_content = chat_content.split('"')[1]
+        model = "text-davinci-003"
     else:
         # 如果訊息的格式不符合，則跳過不處理
         return
