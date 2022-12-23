@@ -35,7 +35,7 @@ The bot uses the OpenAI API to generate responses to user messages. It sends the
 
 + discord
 + requests
-+ json
++ json  
 您可以使用以下命令來安裝這些 package：
 ```
 pip install discord
