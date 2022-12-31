@@ -74,7 +74,7 @@ async def on_message(message):
     "prompt": f"{' '.join(user_history)} {chat_content}",
     "max_tokens": 1024,
     "temperature": 0.5,
-}
+    }
     response = requests.post("https://api.openai.com/v1/completions", headers=headers, json=data)
     if response.status_code == 200:
         jsondata = response.json()
